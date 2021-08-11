@@ -40,8 +40,104 @@ $checkConnection = function (string $name) {
 
     return compact('connected', 'error');
 };
-
 ?>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+<style>
+	.testt {
+		height:auto!important;
+		background-color:#F18627;
+		z-index:-10000;
+		display: block;
+		overflow:auto;
+	}
+	.radio {
+		margin-left:80px;
+		margin-right:80px;
+	}
+	.radio-d {
+		margin-left:60px;
+		margin-right:60px;
+	}
+	.label-radio {
+		padding-left:50px;
+		padding-right:50px;
+	}
+	
+	#contener-maps {
+		display:none;
+		background-color:#F18627;
+	}
+
+	#maps {
+		display:block;
+		width:900px;
+		height:600px;
+		background-color:#F18627;
+	}
+	.btnCerrarMaps {
+		
+	}
+
+</style>
+<script>
+	function abrirMapa(){
+		document.querySelector('#contener-maps').style.display = 'block';
+	}
+	function cerrarMapa(){
+		document.querySelector('#contener-maps').style.display = 'none';
+	}
+</script>
+<script>
+      (() => {
+        
+        var e = {
+            d: (o, t) => {
+              for (var n in t)
+                e.o(t, n) &&
+                  !e.o(o, n) &&
+                  Object.defineProperty(o, n, { enumerable: !0, get: t[n] });
+            },
+            o: (e, o) => Object.prototype.hasOwnProperty.call(e, o),
+            r: (e) => {
+              "undefined" != typeof Symbol &&
+                Symbol.toStringTag &&
+                Object.defineProperty(e, Symbol.toStringTag, {
+                  value: "Module",
+                }),
+                Object.defineProperty(e, "__esModule", { value: !0 });
+            },
+          },
+          o = {};
+        function t() {
+          
+          const e = { lat: 19.040513592328864, lng: -98.19399714573103 },
+            o = new google.maps.Map(document.getElementById("maps"), {
+              zoom: 11,
+              center: e,
+            });
+          let t = new google.maps.InfoWindow({
+            content: "Click the map to get Lat/Lng!",
+            position: e,
+          });
+          t.open(o),
+            o.addListener("click", (e) => {
+              t.close(),
+                (t = new google.maps.InfoWindow({ position: e.latLng })),
+                t.setContent(JSON.stringify(e.latLng.toJSON(), null, 2)),
+                t.open(o);
+                // desmenusar esta info y meterla en un input oculto
+                let informacion = JSON.stringify(e.latLng.toJSON(), null, 2);
+                document.querySelector('#coordenadas').value=informacion;
+
+            });
+        }
+        e.r(o), e.d(o, { initMap: () => t });
+        var n = window;
+        for (var l in o) n[l] = o[l];
+        o.__esModule && Object.defineProperty(n, "__esModule", { value: !0 });
+      })();
+    </script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
         <div class="container-fluid">
@@ -86,7 +182,19 @@ $checkConnection = function (string $name) {
 		
 							<div class="tab-pane fade show <?= $s2active; ?>" id="nav-desarrollo" role="tabpanel" aria-labelledby="nav-desarrollo-tab"> Desarrollo </div>
 							<div class="tab-pane fade show <?= $s3active; ?>" id="nav-met" role="tabpanel" aria-labelledby="nav-met-tab"> Metodolog&iacute;a </div>
-							<div class="tab-pane fade show <?= $s4active; ?>" id="nav-seg" role="tabpanel" aria-labelledby="nav-seg-tab"> Seguimiento </div>
+							<div class="tab-pane fade show <?= $s4active; ?>" id="nav-seg" role="tabpanel" aria-labelledby="nav-seg-tab"> Seguimiento 
+						
+							
+							<div class="testt">
+							<?php echo $this->render('/Encuestas/add', 'empty', ['encuesta' => $encuesta]); ?>
+							</div>
+							
+
+							
+
+							
+
+						</div>
 						</div>
 					</div>
                 </div>
@@ -94,6 +202,8 @@ $checkConnection = function (string $name) {
 
 			
         </div>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-F0hvNugvP2Gf6lDfDNfLzmnDpggVPv8&callback=initMap&libraries=&v=weekly" async></script>
+
 
 <script>
 
